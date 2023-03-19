@@ -1,8 +1,28 @@
-import React from "react";
-
+import { useState, useEffect } from "react";
+import logo from "../assets/images/logo/logo2.png";
 const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.pageYOffset > 200) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="navbar bg-blue-800 shadow-lg">
+    <nav
+      className={`navbar fixed w-full top-0 ${
+        isScrolled ? "bg-white z-10 drop-shadow-md py-5" : "bg-transparent py-5"
+      }`}
+    >
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -23,10 +43,10 @@ const Navbar = () => {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-gray-100 rounded-box w-52"
           >
             <li>
-              <a>Contact</a>
+              <a>Item 1</a>
             </li>
             <li tabIndex={0}>
               <a className="justify-between">
@@ -51,16 +71,18 @@ const Navbar = () => {
               </ul>
             </li>
             <li>
-              <a>About</a>
+              <a>Item 3</a>
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">Borro.Co</a>
+        <div className="px-3">
+          <img src={logo} width={60} alt="logo" />
+        </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>Contact</a>
+            <a>Item 1</a>
           </li>
           <li tabIndex={0}>
             <a>
@@ -85,14 +107,14 @@ const Navbar = () => {
             </ul>
           </li>
           <li>
-            <a className="text-bold">About</a>
+            <a>Item 3</a>
           </li>
         </ul>
       </div>
       <div className="navbar-end">
         <a className="btn">Get started</a>
       </div>
-    </div>
+    </nav>
   );
 };
 
